@@ -5,7 +5,7 @@
 typedef struct {
     int inicio;
     int fim;
-    int clientes[T];
+    int documentos[T];
 } Fila;
 
 void iniciar(Fila *f) {
@@ -13,44 +13,38 @@ void iniciar(Fila *f) {
     f->fim = -1;
 }
 
-void inserir(Fila *f) {
+void adicionar(Fila *f) {
     if (f->fim >= T-1) {
         printf("Fila cheia\n");
-        return;
     }
 
-    printf("Digite a codigo do cliente: ");
-    int codigo;
-    scanf(" %d", &codigo);
+    int documento;
+    printf("Codigo do documento a ser enviado: ");
+    scanf(" %d", &documento);
 
     f->fim++;
-    f->clientes[f->fim] = codigo;
+    f->documentos[f->fim] = documento;
 
-    printf("Cliente %d entrou na fila.\n", f->clientes[f->fim]);
+    printf("Documento %d enviado.\n", documento);
 }
 
 int retirar(Fila *f) {
     if (f->fim < f->inicio) {
-        printf("Fila vazia\n");
+        printf("Fila vazia.\n");
         return -1;
     }
 
-    int cod = f->clientes[f->inicio];
+    int doc = f->documentos[f->inicio];
     f->inicio++;
-    return cod;
+    return doc;
 }
 
 void mostrar(Fila f) {
-    if (f.fim < f.inicio) {
-        printf("Fila vazia!\n");
-        return;
-    }
-
-    printf("Fila atual:");
+    printf("Fila de impressao:");
     for (int i = f.inicio; i <= f.fim; i++) {
-        printf(" %d", f.clientes[i]);
+        printf(" %d", f.documentos[i]);
     }
-    printf(".\n");
+    printf("\n");
 }
 
 int main() {
@@ -60,20 +54,20 @@ int main() {
     iniciar(&f);
 
     do {
-        printf("\n======== Atendimento ========\n");
-        printf(" 1 - Adicionar cliente:\n");
-        printf(" 2 - Cliente atendido:\n");
-        printf(" 3 - Mostrar clientes restantes:\n");
+        printf("\n======== Gerenciar documentos ========\n");
+        printf(" 1 - Enviar documento:\n");
+        printf(" 2 - Imprimir documento:\n");
+        printf(" 3 - Fila de impressao:\n");
         printf(" 0 - Sair:\n");
         printf("--> ");
         scanf(" %d", &op);
 
         switch (op) {
             case 1:
-                inserir(&f);
+                adicionar(&f);
             break;
             case 2:
-                printf("Cliente %d foi atendido", retirar(&f));
+                printf("Imprimindo documento %d.\n", retirar(&f));
             break;
             case 3:
                 mostrar(f);
